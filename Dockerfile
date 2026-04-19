@@ -1,6 +1,5 @@
 FROM ubuntu:22.04
 
-# تثبيت المكتبات اللازمة لتشغيل جودو على لينكس
 RUN apt-get update && apt-get install -y \
     ca-certificates \
     libfontconfig1 \
@@ -9,12 +8,11 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /app
 
-# نسخ ملف الخادم
-COPY server.x86_64 /app/server.x86_64
+# تأكد أن الاسم هنا يطابق الملف الموجود في GitHub تماماً
+COPY online.sh /app/server.x86_64
 RUN chmod +x /app/server.x86_64
 
-# رندر يمرر المنفذ عبر متغير بيئة يسمى PORT
 ENV PORT=10000
 
-# تشغيل الخادم في وضع headless
+# تشغيل الملف
 CMD ["./server.x86_64", "--headless", "--", "--port", "10000"]
